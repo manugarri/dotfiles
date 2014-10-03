@@ -1,14 +1,51 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
+
+
+"Theme
+Plugin 'tomasr/molokai'
+
+"Nerd Tree
+Plugin 'scrooloose/nerdtree'
+Plugin 'kien/ctrlp.vim'
+
+"Syntax completion
+"Plugin 'nsf/gocode', {'rtp': 'vim/'}
+Plugin 'scrooloose/syntastic'
+Plugin 'Valloric/YouCompleteMe'  
+
+"autoformat plugin
+Plugin 'Chiel92/vim-autoformat'
+"Go super awesome compiler /sintax checker
+Plugin 'fatih/vim-go'
+
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
 " pathogen
-execute pathogen#infect()
+"execute pathogen#infect()
 
 syntax on
-filetype plugin indent on
 
 " Move swapfiles to a folder
-set directory=~/.vim/swap,.
+set noswapfile
 
 " Aesthetics
-colorscheme Tomorrow
+" colorscheme Tomorrow
+syntax enable
+set background=dark
+colorscheme molokai
 set guifont=Monospace\ 14
 
 " Highlight the cursor's current line
@@ -19,6 +56,9 @@ set cursorline
 "autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * NERDTree
 map <C-n> :NERDTreeToggle<CR>
+
+" Always set working directory to the file that is opened
+set autochdir
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
@@ -36,6 +76,9 @@ nmap <C-V> "+gP
 imap <C-V> <ESC><C-V>i
 vmap <C-C> "+y
 
+"Maps F4 to grep the current word on the current dir
+map <F4> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
+
 " Python stuff
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 highlight BadWhitespace ctermbg=red guibg=red
@@ -46,3 +89,7 @@ set colorcolumn=80
 
 let g:syntastic_python_checkers = ['pyflakes']
 let g:syntastic_python_flake8_args = '--ignore=E403,E128,F403'
+
+" CtrlP 
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+

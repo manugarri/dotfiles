@@ -26,6 +26,9 @@ cd ~/.vim/bundle
 git clone https://github.com/Valloric/YouCompleteMe.git
 cd YouCompleteMe
 git submodule update --init --recursive
-./install.sh --clang-completer
-cd
+./install.sh
+
+#install solarized colorscheme
+cd ~/.vim/bundle
+git clone git://github.com/altercation/vim-colors-solarized.git
 
