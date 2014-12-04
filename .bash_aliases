@@ -31,7 +31,9 @@ alias g='git'
 alias n='nautilus .'
 
 #Remove all exited docker containers
-alias dockerkill="sudo docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs sudo docker rm"
+alias dockerkill1="sudo docker ps -a | grep -v Up | cut -d ' ' -f 1 | xargs sudo docker rm"
+alias dockerkill2='sudo docker images | grep "^<none>"| tr -s " "|cut -d " " -f 3 |xargs docker rmi -f'
+alias dockerkill='dockerkill2 && dockerkill1'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert

@@ -95,8 +95,20 @@ fi
 # added by Anaconda 2.0.1 installer
 export PATH="/home/manuel/anaconda/bin:$PATH"
 export PYTHONPATH=/home/manuel/anaconda/lib/python2.7/site-packages/
+
+#Go installation
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 source ~/.autoenv/activate.sh
 . /etc/profile.d/vte.sh
 [[ -s "/home/manuel/.gvm/scripts/gvm" ]] && source "/home/manuel/.gvm/scripts/gvm"
+
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+}
+
+export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+
+#export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
