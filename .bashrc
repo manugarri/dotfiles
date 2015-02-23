@@ -102,6 +102,8 @@ export PATH=$PATH:$GOPATH/bin
 source ~/.autoenv/activate.sh
 . /etc/profile.d/vte.sh
 [[ -s "/home/manuel/.gvm/scripts/gvm" ]] && source "/home/manuel/.gvm/scripts/gvm"
+#change default version
+gvm use go1.4
 
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
@@ -112,3 +114,15 @@ export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 #export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+eval "$(direnv hook bash)"
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+#add alias to run whatever the .enter file says
+cd () { 
+    builtin cd "$@";
+    if [  -e ".enter" ]; then
+        echo ".enter found, running"
+        bash .enter
+    fi 
+}
