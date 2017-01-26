@@ -92,37 +92,56 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# added by Anaconda 2.0.1 installer
-export PATH="/home/manuel/anaconda/bin:$PATH"
-export PYTHONPATH=/home/manuel/anaconda/lib/python2.7/site-packages/
-
-#Go installation
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
-source ~/.autoenv/activate.sh
-. /etc/profile.d/vte.sh
-[[ -s "/home/manuel/.gvm/scripts/gvm" ]] && source "/home/manuel/.gvm/scripts/gvm"
-#change default version
-gvm use go1.4
-
 parse_git_branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
 export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 
-#export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+# added by Miniconda3 4.0.5 installer
+export PATH="/home/manuel/miniconda3/bin:$PATH"
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-eval "$(direnv hook bash)"
+#CUDA
+export PATH="/usr/local/cuda-7.5/bin:$PATH"
+export LD_LIBRARY_PATH="/usr/local/cuda-7.5/lib64:$LD_LIBRARY_PATH" 
+export GLPATH=/usr/lib
 
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-#add alias to run whatever the .enter file says
-cd () { 
-    builtin cd "$@";
-    if [  -e ".enter" ]; then
-        echo ".enter found, running"
-        bash .enter
-    fi 
+. /home/manuel/torch-cl/install/bin/torch-activate
+
+#SPARK
+export SPARK_HOME=/home/manuel/spark-2.0.0/
+export PATH=$SPARK_HOME/bin:$PATH
+export PYSPARK_PYTHON=python3
+
+#JAVA
+export JAVA_HOME=/usr
+#export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
+export PATH=$JAVA_HOME/bin:$PATH
+export HADOOP_HOME=/usr/local/hadoop/
+export PATH=$HADOOP_HOME/bin:$PATH
+export HBASE_HOME=/usr/local/Hbase/
+export PATH=$HBASE_HOME/bin:$PATH
+
+source ~/.autoenv/activate.sh
+
+# function to recursively pull a branch in a paths' subdirectories
+pull_branches() {
+    for d in $1*/ ; do
+      cd $d
+      if git ls-remote -q --heads | grep --quiet $2; then
+        printf "\n\nStarting new git pull $2 in: $d"
+        if ! git branch | grep --quiet $2; then
+          printf "\nBranch $2 does not exist locally"
+          git checkout -q -b $2 > /dev/null
+        else
+          printf "\nBranch $2 exists locally"
+          git checkout -q $2  > /dev/null  
+        fi
+        printf "\nPulling from origin $2"
+        git pull -q origin $2 > /dev/null
+      fi
+      cd ..
+      printf "\n..."
+    done
 }

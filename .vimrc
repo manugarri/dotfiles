@@ -10,7 +10,6 @@ call vundle#begin()
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-
 "Theme
 Plugin 'tomasr/molokai'
 
@@ -19,16 +18,24 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 
 "Syntax completion
-"Plugin 'nsf/gocode', {'rtp': 'vim/'}
 Plugin 'scrooloose/syntastic'
-Plugin 'Valloric/YouCompleteMe'  
+"Plugin 'nsf/gocode', {'rtp': 'vim/'}
+"Plugin 'Valloric/YouCompleteMe'  
 
 "autoformat plugin
 Plugin 'Chiel92/vim-autoformat'
-"Go super awesome compiler /sintax checker
-Plugin 'fatih/vim-go'
 
 Plugin 'sjl/gundo.vim' 
+
+"Powerline
+Plugin 'powerline/powerline'
+
+"CoffeeScript 
+Plugin 'kchmck/vim-coffee-script'
+
+"golang
+Plugin 'fatih/vim-go'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -47,6 +54,10 @@ set guifont=Monospace\ 14
 
 " Highlight the cursor's current line
 set cursorline
+" show line number
+set number
+
+
 
 " Smart search
 :set ignorecase
@@ -87,6 +98,8 @@ autocmd VimEnter * NERDTree
 map <C-n> :NERDTreeToggle<CR>
 "show hidden files
 let NERDTreeShowHidden=1
+let NERDTreeIgnore = ['\.pyc$']
+let NERDTreeIgnore = ['\.fuse*']
 " Always set working directory to the file that is opened
 set autochdir
 
@@ -98,7 +111,17 @@ au BufRead,BufNewFile *.py match BadWhitespace /^\t\+/
 au BufRead,BufNewFile *.py match BadWhitespace /\s\+$/
 " Highlight the 80th column
 set colorcolumn=80
+set linespace=5
 
+"SYNTASTIC SETTINGS
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 let g:syntastic_python_checkers = ['pyflakes']
 let g:syntastic_python_flake8_args = '--ignore=E403,E128,F403'
 
@@ -107,3 +130,10 @@ set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 "gundo.vim
 nnoremap <F5> :GundoToggle<CR>
+
+
+"powerline
+" Always show statusline
+set laststatus=2
+" Use 256 colours (Use this setting only if your terminal supports 256 colours)
+set t_Co=256

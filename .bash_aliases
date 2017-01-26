@@ -27,7 +27,8 @@ alias gc='git commit'
 alias ga='git add'
 alias gp='git push'
 alias gs='git status'
-alias g='git'
+alias gclean='git branch --merged master | grep -v "\* master" | xargs -n 1 git branch -d'
+alias gpullall='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull origin master \;'
 alias n='nautilus .'
 
 #Remove all exited docker containers
@@ -40,4 +41,11 @@ alias dockerkill='dockerkill2 && dockerkill1'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 alias vpn='sudo openvpn --config ~/.ovpn_conf/client.ovpn'
-alias in='ipython notebook'
+alias jn='jupyter notebook'
+
+# alias for raspberry pi reminder
+alias remind='/mnt/DATA/Backup/Proyectos/raspberry_pi_reminders/reminder_cli.py'
+
+alias workspace='cd /mnt/DATA/Backup/Trabajo/tribeclick/workspace'
+#emudolphin
+alias dolphin='sudo rmmod xpad && xboxdrv && dolphin-emu &'
