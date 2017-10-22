@@ -13,28 +13,20 @@ Plugin 'gmarik/Vundle.vim'
 "Theme
 Plugin 'tomasr/molokai'
 
-"Nerd Tree
+"Navigation
 Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 
-"Syntax completion
-Plugin 'scrooloose/syntastic'
-"Plugin 'nsf/gocode', {'rtp': 'vim/'}
-"Plugin 'Valloric/YouCompleteMe'  
+"Syntax Checker
+Plugin 'PyCQA/flake8'
+Plugin 'fatih/vim-go'
+Plugin 'w0rp/ale'
 
-"autoformat plugin
+"Autoformat plugin
 Plugin 'Chiel92/vim-autoformat'
 
-Plugin 'sjl/gundo.vim' 
-
 "Powerline
-Plugin 'powerline/powerline'
-
-"CoffeeScript 
-Plugin 'kchmck/vim-coffee-script'
-
-"golang
-Plugin 'fatih/vim-go'
+Plugin 'vim-airline/vim-airline'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -56,8 +48,6 @@ set guifont=Monospace\ 14
 set cursorline
 " show line number
 set number
-
-
 
 " Smart search
 :set ignorecase
@@ -103,7 +93,6 @@ let NERDTreeIgnore = ['\.fuse*']
 " Always set working directory to the file that is opened
 set autochdir
 
-
 " Python stuff
 autocmd BufWritePre *.py normal m`:%s/\s\+$//e``
 highlight BadWhitespace ctermbg=red guibg=red
@@ -112,28 +101,18 @@ au BufRead,BufNewFile *.py match BadWhitespace /\s\+$/
 " Highlight the 80th column
 set colorcolumn=80
 set linespace=5
+let NERDTreeIgnore = ['\.pyc$']
 
-"SYNTASTIC SETTINGS
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"ALE SETTINGS
+let g:ale_linters = {
+\   'python': ['flake8', 'mypy'],
+\}"
+let g:airline#extensions#ale#enabled = 1
+let g:ale_python_flake8_args = '--ignore=C0111,C301,E403,E128,E501,F403'
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_python_checkers = ['pyflakes']
-let g:syntastic_python_flake8_args = '--ignore=E403,E128,F403'
+"NAVIGATE ALE ERRORS
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
-" CtrlP 
+" CtrlP
 set runtimepath^=~/.vim/bundle/ctrlp.vim
-
-"gundo.vim
-nnoremap <F5> :GundoToggle<CR>
-
-
-"powerline
-" Always show statusline
-set laststatus=2
-" Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set t_Co=256

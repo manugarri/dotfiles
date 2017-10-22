@@ -98,31 +98,6 @@ parse_git_branch() {
 
 export PS1="\u@\h \W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 
-# added by Miniconda3 4.0.5 installer
-export PATH="/home/manuel/miniconda3/bin:$PATH"
-
-#CUDA
-export PATH="/usr/local/cuda-7.5/bin:$PATH"
-export LD_LIBRARY_PATH="/usr/local/cuda-7.5/lib64:$LD_LIBRARY_PATH" 
-export GLPATH=/usr/lib
-
-
-. /home/manuel/torch-cl/install/bin/torch-activate
-
-#SPARK
-export SPARK_HOME=/home/manuel/spark-2.0.0/
-export PATH=$SPARK_HOME/bin:$PATH
-export PYSPARK_PYTHON=python3
-
-#JAVA
-export JAVA_HOME=/usr
-#export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64
-export PATH=$JAVA_HOME/bin:$PATH
-export HADOOP_HOME=/usr/local/hadoop/
-export PATH=$HADOOP_HOME/bin:$PATH
-export HBASE_HOME=/usr/local/Hbase/
-export PATH=$HBASE_HOME/bin:$PATH
-
 source ~/.autoenv/activate.sh
 
 # function to recursively pull a branch in a paths' subdirectories
@@ -145,3 +120,7 @@ pull_branches() {
       printf "\n..."
     done
 }
+
+
+# autojump
+source /usr/share/autojump/autojump.bash

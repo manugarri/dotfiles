@@ -23,13 +23,18 @@ alias grepr='grep -Ir '
 alias g='git'
 alias p='python'
 alias p3='python3'
+alias n='nautilus .'
+
+#tired of accidentally deleting files, requires trash-cli installd by pip install trash-cli:
+alias rm=trash
+# github
 alias gc='git commit'
 alias ga='git add'
 alias gp='git push'
 alias gs='git status'
 alias gclean='git branch --merged master | grep -v "\* master" | xargs -n 1 git branch -d'
-alias gpullall='find . -mindepth 1 -maxdepth 1 -type d -print -exec git -C {} pull origin master \;'
-alias n='nautilus .'
+alias gbranches='for d in */ ; do printf "$d  BRANCH: "; echo `cd $d && git symbolic-ref HEAD`; done'
+alias gmaster='for d in */ ; do printf "$d  BRANCH: "; echo `cd $d && git checkout master && git fetch --all && git pull origin master`; done'
 
 #Remove all exited docker containers
 alias dockerkill1="sudo docker ps -a | grep -v Up | cut -d ' ' -f 1 | xargs sudo docker rm"
@@ -43,9 +48,4 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 alias vpn='sudo openvpn --config ~/.ovpn_conf/client.ovpn'
 alias jn='jupyter notebook'
 
-# alias for raspberry pi reminder
-alias remind='/mnt/DATA/Backup/Proyectos/raspberry_pi_reminders/reminder_cli.py'
-
-alias workspace='cd /mnt/DATA/Backup/Trabajo/tribeclick/workspace'
-#emudolphin
-alias dolphin='sudo rmmod xpad && xboxdrv && dolphin-emu &'
+alias workspace='cd /storage/Backup/Trabajo/tribeclick/workspace'
